@@ -1,15 +1,15 @@
-package christmas.domain;
+package christmas.domain.discount;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import christmas.domain.DiscountAmount;
+import christmas.domain.Reservation;
 import christmas.domain.discount.ChristmasDiscount;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 public class ChristmasDiscountTest {
     private ChristmasDiscount christmasDiscount;
@@ -17,24 +17,6 @@ public class ChristmasDiscountTest {
     @BeforeEach
     void setUp() {
         christmasDiscount = new ChristmasDiscount();
-    }
-
-    @DisplayName("크리스마스 기간 확인 테스트")
-    @ParameterizedTest
-    @ValueSource(ints = {1, 25})
-    void 크리스마스_기간_확인(int day) {
-        LocalDate date = LocalDate.of(2023, 12, day);
-        Reservation reservation = new Reservation(date);
-        assertThat(christmasDiscount.isSatisfiedBy(reservation)).isTrue();
-    }
-
-    @DisplayName("비크리스마스 기간 테스트")
-    @ParameterizedTest
-    @ValueSource(ints = {26, 31})
-    void 비크리스마스_기간_확인(int day) {
-        LocalDate date = LocalDate.of(2023, 12, day);
-        Reservation reservation = new Reservation(date);
-        assertThat(christmasDiscount.isSatisfiedBy(reservation)).isFalse();
     }
 
     @DisplayName("크리스마스 첫날 할인 금액 확인 테스트")
