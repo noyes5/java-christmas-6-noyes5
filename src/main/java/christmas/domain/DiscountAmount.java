@@ -35,14 +35,14 @@ public class DiscountAmount {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(discountAmount);
+    }
+
+    @Override
     public String toString() {
         return "DiscountAmount{" +
                 "discountAmount=" + discountAmount +
                 '}';
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(discountAmount);
     }
 }
