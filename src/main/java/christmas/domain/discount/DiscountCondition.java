@@ -2,6 +2,7 @@ package christmas.domain.discount;
 
 import christmas.domain.Reservation;
 
+@FunctionalInterface
 public interface DiscountCondition {
-    public boolean isSatisfiedBy(Reservation reservation);
+    boolean isSatisfiedBy(Reservation reservation);
 }
