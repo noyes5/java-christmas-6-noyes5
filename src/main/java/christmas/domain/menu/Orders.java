@@ -11,38 +11,39 @@ public class Orders {
 
     private final List<OrderItem> orderItems;
 
-    public Orders() {
-        this.orderItems = new ArrayList<>();
+    private Orders(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
 
-    public List<OrderItem> createOrder(Map<String, Integer> menuAndQuantities) {
+    public static Orders createOrder(Map<String, Integer> menuAndQuantities) {
+        List<OrderItem> orderItems = new ArrayList<>();
         for (Map.Entry<String, Integer> entry : menuAndQuantities.entrySet()) {
             String menuName = entry.getKey();
             int quantity = entry.getValue();
             Menu menu = MenuRepository.from(menuName);
             orderItems.add(new OrderItem(menu, quantity));
         }
-        validateOrder();
-        return orderItems;
+        validateOrder(orderItems);
+        return new Orders(orderItems);
     }
 
 
-    private void validateOrder() {
-        if (isOnlyHasBeverage()) {
+    private static void validateOrder(List<OrderItem> orderItems) {
+        if (isOnlyHasBeverage(orderItems)) {
             throw new IllegalArgumentException(OrderException.BEVERAGE_ONLY_ORDER_ERROR.getMessage());
         }
-        if (isInvalidQuantity()) {
+        if (isInvalidQuantity(orderItems)) {
             throw new IllegalArgumentException(OrderException.INVALID_TOTAL_QUANTITY.getMessage());
         }
     }
 
-    private boolean isOnlyHasBeverage() {
+    private static boolean isOnlyHasBeverage(List<OrderItem> orderItems) {
         return orderItems.stream()
                 .allMatch(orderItem -> orderItem.menu()
                         .getCategory() == Category.BEVERAGE);
     }
 
-    private boolean isInvalidQuantity() {
+    private static boolean isInvalidQuantity(List<OrderItem> orderItems) {
         int totalQuantity = orderItems.stream()
                 .map(OrderItem::quantity)
                 .reduce(0, Integer::sum);

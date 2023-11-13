@@ -34,9 +34,7 @@ public class PromotionController {
 
     private Orders getOrderMenus() {
         try {
-            Orders orders = new Orders();
-            orders.createOrder(inputView.readOrders());
-            return orders;
+            return Orders.createOrder(inputView.readOrders());
         } catch (IllegalArgumentException exception) {
             outputView.printExceptionMessage(exception);
             return getOrderMenus();
