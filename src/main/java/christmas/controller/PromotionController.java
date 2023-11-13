@@ -1,6 +1,7 @@
 package christmas.controller;
 
 import christmas.domain.Reservation;
+import christmas.domain.menu.Orders;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 
@@ -16,7 +17,10 @@ public class PromotionController {
     public void play() {
         outputView.printMain();
         Reservation reservation = Reservation.of(getReservation());
-        getOrderMenus();
+        Orders userOrders = getOrderMenus();
+        // 주문 메뉴 출력
+        // 총 금액 계산
+        // 총 혜택 계산
     }
 
     private int getReservation() {
@@ -28,9 +32,11 @@ public class PromotionController {
         }
     }
 
-    private String getOrderMenus() {
+    private Orders getOrderMenus() {
         try {
-            return inputView.readOrderMenus();
+            Orders orders = new Orders();
+            orders.createOrder(inputView.readOrders());
+            return orders;
         } catch (IllegalArgumentException exception) {
             outputView.printExceptionMessage(exception);
             return getOrderMenus();

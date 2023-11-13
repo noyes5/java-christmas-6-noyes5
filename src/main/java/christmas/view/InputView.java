@@ -4,8 +4,8 @@ import camp.nextstep.edu.missionutils.Console;
 import christmas.util.StringUtils;
 import christmas.util.validator.MenuValidator;
 import christmas.util.validator.ReservationValidator;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class InputView {
     private enum Messsage {
@@ -26,11 +26,15 @@ public class InputView {
         return Integer.parseInt(input);
     }
 
-    public String readOrderMenus() {
+    public Map<String, Integer> readOrders() {
         System.out.println(Messsage.INPUT_ORDER_MENU.message);
-        Map<String, Integer> orderMenus = new HashMap<>();
         String input = StringUtils.removeSpace(Console.readLine());
         new MenuValidator().validate(input);
-        return null;
+
+        return StringUtils.splitByComma(input)
+                .stream()
+                .map(StringUtils::splitByHyphen)
+                .collect(Collectors.groupingBy(parts -> parts.get(0),
+                        Collectors.summingInt(parts -> Integer.parseInt(parts.get(1)))));
     }
 }
