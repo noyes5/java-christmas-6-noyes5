@@ -10,12 +10,12 @@ public class ReservationValidator extends Validator {
 
     @Override
     public void validate(String input) throws IllegalArgumentException {
-        validateNullOrEmpty(input);
+        validateEmpty(input);
         validateNumeric(input);
         validateDateRange(input);
     }
 
-    private static void validateNullOrEmpty(String input) {
+    private void validateEmpty(String input) {
         if (input.isEmpty()) {
             throw new IllegalArgumentException(DateException.INVALID_EMPTY_INPUT.getMessage());
         }
