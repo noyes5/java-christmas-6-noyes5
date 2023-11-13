@@ -18,7 +18,7 @@ public class PromotionController {
         outputView.printMain();
         Reservation reservation = Reservation.of(getReservation());
         Orders userOrders = getOrderMenus();
-        // 주문 메뉴 출력
+        outputView.printOrderMenu(userOrders, reservation);
         // 총 금액 계산
         // 총 혜택 계산
     }

@@ -46,4 +46,8 @@ public class Menu {
                 ", category=" + category +
                 '}';
     }
+
+    public String getName() {
+        return name;
+    }
 }

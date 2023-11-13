@@ -3,6 +3,7 @@ package christmas.domain.menu;
 import christmas.domain.dto.OrderItem;
 import christmas.domain.exception.OrderException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -50,4 +51,7 @@ public class Orders {
         return totalQuantity > MAX_QUANTITY;
     }
 
+    public List<OrderItem> getOrderItems() {
+        return Collections.unmodifiableList(orderItems);
+    }
 }
