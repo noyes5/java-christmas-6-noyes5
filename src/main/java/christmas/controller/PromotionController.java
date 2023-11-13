@@ -1,5 +1,6 @@
 package christmas.controller;
 
+import christmas.domain.Reservation;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 
@@ -14,15 +15,25 @@ public class PromotionController {
 
     public void play() {
         outputView.printMain();
-        initReservation();
+        Reservation reservation = Reservation.of(getReservation());
+        getOrderMenus();
     }
 
-    private String initReservation() {
+    private int getReservation() {
         try {
             return inputView.readReservation();
         } catch (IllegalArgumentException exception) {
             outputView.printExceptionMessage(exception);
-            return initReservation();
+            return getReservation();
+        }
+    }
+
+    private String getOrderMenus() {
+        try {
+            return inputView.readOrderMenus();
+        } catch (IllegalArgumentException exception) {
+            outputView.printExceptionMessage(exception);
+            return getOrderMenus();
         }
     }
 }
