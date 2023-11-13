@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import christmas.domain.DiscountAmount;
 import christmas.domain.Reservation;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,7 +20,7 @@ class WeekendDiscountTest {
     @DisplayName("주말기간 할인 테스트")
     @Test
     void 주말_할인() {
-        Reservation weekendReservation = new Reservation(LocalDate.of(2023, 12, 4));
+        Reservation weekendReservation =Reservation.of(4);
         DiscountAmount discountAmount = weekendDiscount.calculateDiscountAmount(weekendReservation);
         assertThat(discountAmount.getDiscountAmount()).isEqualTo(new BigDecimal("2023"));
     }
