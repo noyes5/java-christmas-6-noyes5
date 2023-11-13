@@ -1,7 +1,6 @@
 package christmas.util.validator;
 
 import christmas.domain.exception.DateException;
-import christmas.util.StringUtils;
 import java.util.regex.Pattern;
 
 public class ReservationValidator extends Validator {
@@ -17,13 +16,9 @@ public class ReservationValidator extends Validator {
     }
 
     private static void validateNullOrEmpty(String input) {
-        if (isEmpty(input)) {
+        if (input.isEmpty()) {
             throw new IllegalArgumentException(DateException.INVALID_EMPTY_INPUT.getMessage());
         }
-    }
-
-    private static boolean isEmpty(String input) {
-        return StringUtils.removeSpace(input).isEmpty();
     }
 
     private void validateNumeric(String input) {

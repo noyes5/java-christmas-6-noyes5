@@ -1,6 +1,7 @@
 package christmas.view;
 
 import camp.nextstep.edu.missionutils.Console;
+import christmas.util.StringUtils;
 import christmas.util.validator.ReservationValidator;
 
 public class InputView {
@@ -14,11 +15,11 @@ public class InputView {
         }
     }
 
-    public String readReservation() {
+    public int readReservation() {
         System.out.println(InputView.Messsage.INPUT_RESERVATION.message);
-        String input = Console.readLine();
+        String input = StringUtils.removeSpace(Console.readLine());
         new ReservationValidator().validate(input);
-        return input;
+        return Integer.parseInt(input);
     }
 
 }
