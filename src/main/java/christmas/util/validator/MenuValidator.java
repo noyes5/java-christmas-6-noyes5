@@ -13,9 +13,9 @@ public class MenuValidator extends Validator {
     @Override
     public void validate(String input) throws IllegalArgumentException {
         validateEmpty(input);
-        List<String> order = StringUtils.splitByComma(input);
-        validateRegex(order);
-        validateDuplicate(order);
+        List<String> orders = StringUtils.splitByComma(input);
+        validateRegex(orders);
+        validateDuplicate(orders);
     }
 
     private void validateEmpty(String input) {
@@ -34,9 +34,9 @@ public class MenuValidator extends Validator {
         }
     }
 
-    private static void validateDuplicate(List<String> order) {
-        Set<String> uniqueOrders = new HashSet<>(order);
-        if (uniqueOrders.size() != order.size()) {
+    private static void validateDuplicate(List<String> orders) {
+        Set<String> uniqueOrders = new HashSet<>(orders);
+        if (uniqueOrders.size() != orders.size()) {
             throw new IllegalArgumentException(MenuException.INVALID_MENU_INPUT.getMessage());
         }
     }
