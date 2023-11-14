@@ -23,14 +23,14 @@ public class ReservationValidator extends Validator {
 
     private void validateNumeric(String input) {
         if (!NUMBER_REGEX.matcher(input).matches()) {
-            throw new IllegalArgumentException(DateException.INVALID_NOT_NUMERIC.getMessage());
+            throw new IllegalArgumentException(DateException.INVALID_DATE_INPUT.getMessage());
         }
     }
 
     private void validateDateRange(String input) {
         int date = validateParseInt((input));
         if (date < FIRST_DAY_OF_MONTH || date > LAST_DAY_OF_MONTH) {
-            throw new IllegalArgumentException(DateException.INVALID_DATE_RANGE.getMessage());
+            throw new IllegalArgumentException(DateException.INVALID_DATE_INPUT.getMessage());
         }
     }
 
