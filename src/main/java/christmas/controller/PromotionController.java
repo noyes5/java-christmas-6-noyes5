@@ -1,5 +1,6 @@
 package christmas.controller;
 
+import christmas.domain.Badge;
 import christmas.domain.DiscountPolicy;
 import christmas.domain.Money;
 import christmas.domain.Promotion;
@@ -36,7 +37,7 @@ public class PromotionController {
         Money BenefitPromoMoney = promotion.calculateBenefitAmount();
         Money discountAmount = promotion.calculateDiscountAmount();
         outputView.printDiscountResult(totalMoney, BenefitPromoMoney, discountAmount);
-
+        outputView.printBadge(Badge.getBadgeByMoney(BenefitPromoMoney));
     }
 
     private void printResult(Gift gift) {

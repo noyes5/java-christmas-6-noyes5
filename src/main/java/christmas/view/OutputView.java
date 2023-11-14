@@ -6,6 +6,7 @@ import static christmas.util.ResultFormatter.discountMoneyFormat;
 import static christmas.util.ResultFormatter.menuFormat;
 import static christmas.util.ResultFormatter.moneyFormat;
 
+import christmas.domain.Badge;
 import christmas.domain.Money;
 import christmas.domain.Reservation;
 import christmas.domain.discount.DiscountCondition;
@@ -85,6 +86,11 @@ public class OutputView {
 
         System.out.println(Message.DISCOUNT_TOTAL_PRICE.message);
         System.out.println(moneyFormat(totalMoney.subtract(discountAmount).getAmount()));
+    }
+
+    public void printBadge(Badge badgeByMoney) {
+        System.out.println(Message.NEXT_MONTH_EVENT_BADGE.message);
+        System.out.println(badgeByMoney.toString());
     }
 
 
