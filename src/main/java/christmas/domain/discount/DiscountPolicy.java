@@ -2,12 +2,6 @@ package christmas.domain.discount;
 
 import christmas.domain.Money;
 import christmas.domain.Reservation;
-import christmas.domain.discount.ChristmasDiscount;
-import christmas.domain.discount.DiscountCondition;
-import christmas.domain.discount.GivingGiftDiscount;
-import christmas.domain.discount.SpecialDayDiscount;
-import christmas.domain.discount.WeekdayDiscount;
-import christmas.domain.discount.WeekendDiscount;
 import christmas.domain.menu.Orders;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
