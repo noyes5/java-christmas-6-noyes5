@@ -3,7 +3,6 @@ package christmas.view;
 import static christmas.domain.Constants.DECEMBER;
 import static christmas.util.ResultFormatter.dateFormat;
 import static christmas.util.ResultFormatter.discountFormat;
-import static christmas.util.ResultFormatter.discountMoneyFormat;
 import static christmas.util.ResultFormatter.menuFormat;
 import static christmas.util.ResultFormatter.moneyFormat;
 
@@ -11,10 +10,9 @@ import christmas.domain.Badge;
 import christmas.domain.Money;
 import christmas.domain.Reservation;
 import christmas.domain.discount.DiscountCondition;
-import christmas.dto.MenuItem;
-import christmas.dto.OrderInfo;
 import christmas.domain.gift.Gift;
 import christmas.domain.menu.Orders;
+import christmas.dto.MenuItem;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
@@ -32,37 +30,22 @@ public class OutputView {
     }
 
     public void printOrderMenu(Orders userOrders, Reservation reservation) {
+        printEventPreviewMessage(reservation);
+        printOrderMenuDetails(userOrders);
+    }
+
+    private void printEventPreviewMessage(Reservation reservation) {
         String formattedDate = dateFormat(reservation.getDate());
         String eventMessage = String.format(Message.EVENT_PREVIEW_MESSAGE.message, formattedDate);
         System.out.println(eventMessage);
         System.out.println(Message.ORDER_MENU.message);
+    }
 
+    private void printOrderMenuDetails(Orders userOrders) {
         List<MenuItem> orders = userOrders.getOrderItems();
         for (MenuItem item : orders) {
             System.out.printf(menuFormat(item.menu().getName(), item.quantity()) + LINE_SEPARATOR);
         }
-    }
-
-    public void printOrderInfo(OrderInfo orderInfo) {
-        Reservation reservation = orderInfo.reservation();
-        Orders userOrders = orderInfo.orders();
-
-        displayEventPreviewHeader(reservation);
-        printOrderMenu(userOrders);
-    }
-
-    private static void printOrderMenu(Orders userOrders) {
-        System.out.println(Message.ORDER_MENU.message);
-        List<MenuItem> orders = userOrders.getOrderItems();
-        for (MenuItem item : orders) {
-            System.out.printf(menuFormat(item.menu().getName(), item.quantity()) + LINE_SEPARATOR);
-        }
-    }
-
-    private static void displayEventPreviewHeader(Reservation reservation) {
-        String formattedDate = dateFormat(reservation.getDate());
-        String eventMessage = String.format(Message.EVENT_PREVIEW_MESSAGE.message, formattedDate);
-        System.out.println(eventMessage);
     }
 
     public void printOriginalTotalMoney(Money totalMoney) {
@@ -81,9 +64,16 @@ public class OutputView {
 
     private void appendGifts(StringBuilder result, List<MenuItem> gifts) {
         if (gifts.isEmpty()) {
-            result.append(NO_BENEFIT);
+            appendNoBenefit(result);
         }
+        appendGiftMenus(result, gifts);
+    }
 
+    private void appendNoBenefit(StringBuilder result) {
+        result.append(NO_BENEFIT);
+    }
+
+    private void appendGiftMenus(StringBuilder result, List<MenuItem> gifts) {
         gifts.forEach(giftMenu -> {
             String giftMenuName = giftMenu.menu().getName();
             int quantity = giftMenu.quantity();
@@ -93,23 +83,37 @@ public class OutputView {
 
     public void printDiscount(Map<DiscountCondition, Money> discountConditions) {
         System.out.println(Message.DISCOUNT_DETAILS.message);
+
         if (discountConditions.isEmpty()) {
             System.out.println(NO_BENEFIT);
         }
-        for (DiscountCondition condition : discountConditions.keySet()) {
-            discountConditions.get(condition);
-            System.out.println(discountFormat(condition.getPromotionType().getMessage(),
-                    discountConditions.get(condition).getAmount()));
-        }
+        printDiscountDetails(discountConditions);
     }
 
-    public void printDiscountResult(Money totalMoney, Money BenefitPromoMoney, Money discountAmount) {
-        BigDecimal result = BenefitPromoMoney.getAmount();
-        System.out.println(Message.TOTAL_DISCOUNT_AMOUNT.message);
-        System.out.println(discountMoneyFormat(result));
+    private void printDiscountDetails(Map<DiscountCondition, Money> discountConditions) {
+        discountConditions.forEach((condition, discountAmount) ->
+                System.out.println(discountFormat(
+                        condition.getPromotionType().getMessage(),
+                        discountAmount.getAmount())
+                )
+        );
+    }
 
-        System.out.println(Message.DISCOUNT_TOTAL_PRICE.message);
-        System.out.println(moneyFormat(totalMoney.subtract(discountAmount).getAmount()));
+
+    public void printDiscountResult(Money totalMoney, Money benefitPromoMoney, Money discountAmount) {
+        System.out.println(Message.TOTAL_DISCOUNT_AMOUNT.message);
+        printMoneyFormat(benefitPromoMoney.getAmount());
+
+        printMessage(Message.DISCOUNT_TOTAL_PRICE.message);
+        printMoneyFormat(totalMoney.subtract(discountAmount).getAmount());
+    }
+
+    private void printMoneyFormat(BigDecimal amount) {
+        System.out.println(moneyFormat(amount));
+    }
+
+    private void printMessage(String message) {
+        System.out.println(message);
     }
 
     public void printBadge(Badge badgeByMoney) {
