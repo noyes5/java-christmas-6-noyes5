@@ -2,40 +2,26 @@ package christmas.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.math.BigDecimal;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class MoneyTest {
     @DisplayName("금액을 더하는 테스트")
-    @Test
-    void 금액을_더함() {
-        Money currentMoney = new Money(new BigDecimal("10000"));
-        Money plusMoney = new Money(new BigDecimal("1000"));
-        assertThat(currentMoney.add(plusMoney)).isEqualTo(new Money(new BigDecimal("11000")));
-    }
-
-    @DisplayName("큰수에 금액을 더하는 테스트")
-    @Test
-    void 큰수_금액을_더함() {
-        Money currentMoney = new Money(new BigDecimal("1000000000000"));
-        Money plusMoney = new Money(new BigDecimal("1000000000000"));
-        assertThat(currentMoney.add(plusMoney)).isEqualTo(new Money(new BigDecimal("2000000000000")));
+    @ParameterizedTest
+    @CsvSource({"10000, 100, 10100", "5000, 200, 5200", "0, 50, 50"})
+    void 금액을_더함(int firstMoney, int secondMoney, int resultMoney) {
+        Money currentMoney = Money.of(firstMoney);
+        Money plusMoney = Money.of(secondMoney);
+        assertThat(currentMoney.add(plusMoney)).isEqualTo(Money.of(resultMoney));
     }
 
     @DisplayName("금액을 차감하는 테스트")
-    @Test
-    void 금액을_뺌() {
-        Money currentMoney = new Money(new BigDecimal("10000"));
-        Money minusMoney = new Money(new BigDecimal("1000"));
-        assertThat(currentMoney.subtract(minusMoney)).isEqualTo(new Money(new BigDecimal("9000")));
-    }
-
-    @DisplayName("금액이 마이너스인 테스트")
-    @Test
-    void 작은수에서_큰수_금액을_뺌() {
-        Money currentMoney = new Money(new BigDecimal("1000"));
-        Money minusMoney = new Money(new BigDecimal("10000"));
-        assertThat(currentMoney.subtract(minusMoney)).isEqualTo(new Money(new BigDecimal("-9000")));
+    @ParameterizedTest
+    @CsvSource({"10000, 100, 9900", "5000, 200, 4800", "0, 50, -50"})
+    void 금액을_뺌(int firstMoney, int secondMoney, int resultMoney) {
+        Money currentMoney = Money.of(firstMoney);
+        Money minusMoney = Money.of(secondMoney);
+        assertThat(currentMoney.subtract(minusMoney)).isEqualTo(Money.of(resultMoney));
     }
 }

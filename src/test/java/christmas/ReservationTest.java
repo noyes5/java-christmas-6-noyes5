@@ -53,7 +53,7 @@ public class ReservationTest {
     @ValueSource(ints = {4, 5, 6, 7, 31})
     void 비주말_확인(int weekend) {
         Reservation reservation = Reservation.of(weekend);
-        assertThat(reservation.hasInWeekEndPeriods()).isTrue();
+        assertThat(reservation.hasInWeekEndPeriods()).isFalse();
     }
 
     @DisplayName("기간 확인 테스트 - 특별 할인 기간")
