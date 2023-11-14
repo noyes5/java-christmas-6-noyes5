@@ -32,7 +32,9 @@ public class ResultFormatter {
     }
 
     public static String discountMoneyFormat(BigDecimal bigDecimal) {
-        DecimalFormat decimalFormat = new DecimalFormat(PROMO_MONEY_FORMAT);
-        return decimalFormat.format(bigDecimal);
+        if (bigDecimal.compareTo(BigDecimal.ZERO) == 0) {
+            return new DecimalFormat(MONEY_FORMAT).format(bigDecimal);
+        }
+        return new DecimalFormat(PROMO_MONEY_FORMAT).format(bigDecimal);
     }
 }
