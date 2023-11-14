@@ -91,12 +91,14 @@ public class OutputView {
     }
 
     private void printDiscountDetails(Map<DiscountCondition, Money> discountConditions) {
-        discountConditions.forEach((condition, discountAmount) ->
+        discountConditions.forEach((condition, discountAmount) -> {
+            if (discountAmount.getAmount().compareTo(BigDecimal.ZERO) > 0) {
                 System.out.println(discountFormat(
                         condition.getPromotionType().getMessage(),
                         discountAmount.getAmount())
-                )
-        );
+                );
+            }
+        });
     }
 
 
