@@ -4,10 +4,12 @@ import christmas.domain.DiscountPolicy;
 import christmas.domain.Money;
 import christmas.domain.Promotion;
 import christmas.domain.Reservation;
+import christmas.domain.discount.DiscountCondition;
 import christmas.domain.gift.Gift;
 import christmas.domain.menu.Orders;
 import christmas.view.InputView;
 import christmas.view.OutputView;
+import java.util.Map;
 
 public class PromotionController {
     private final InputView inputView;
@@ -28,8 +30,13 @@ public class PromotionController {
         Gift gift = userOrders.giveGift(totalMoney);
         printResult(gift);
         DiscountPolicy discountPolicy = new DiscountPolicy(totalMoney);
-        Promotion promotion = new Promotion(discountPolicy);
-        outputView.printDiscount(promotion.calculateDiscountAmounts(reservation, userOrders));
+        Promotion promotion = new Promotion(discountPolicy, reservation, userOrders);
+        Map<DiscountCondition, Money> discountConditions = promotion.getCollectDiscounts();
+        outputView.printDiscount(discountConditions);
+        Money BenefitPromoMoney = promotion.calculateBenefitAmount();
+        Money discountAmount = promotion.calculateDiscountAmount();
+        outputView.printDiscountResult(totalMoney, BenefitPromoMoney, discountAmount);
+
     }
 
     private void printResult(Gift gift) {

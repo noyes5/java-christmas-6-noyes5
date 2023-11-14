@@ -30,15 +30,15 @@ public class DiscountPolicy {
         }
     }
 
-    public Map<DiscountCondition, Money> calculateDiscountAmounts(Reservation reservation, Orders orders) {
-        Map<DiscountCondition, Money> discountAmounts = new LinkedHashMap<>();
+    public Map<DiscountCondition, Money> collectDiscounts(Reservation reservation, Orders orders) {
+        Map<DiscountCondition, Money> collectDiscounts = new LinkedHashMap<>();
 
         for (DiscountCondition condition : conditions) {
             if (condition.isSatisfiedBy(reservation)) {
                 Money discountMoney = condition.calculateDiscountAmount(reservation, orders);
-                discountAmounts.put(condition, discountMoney);
+                collectDiscounts.put(condition, discountMoney);
             }
         }
-        return discountAmounts;
+        return collectDiscounts;
     }
 }

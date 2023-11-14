@@ -1,17 +1,39 @@
 package christmas.domain;
 
+import static christmas.domain.PromotionType.GIVING_GIFT;
+
 import christmas.domain.discount.DiscountCondition;
 import christmas.domain.menu.Orders;
 import java.util.Map;
 
 public class Promotion {
-    private DiscountPolicy discountPolicy;
+    private Map<DiscountCondition, Money> collectDiscounts;
 
-    public Promotion(DiscountPolicy discountPolicy) {
-        this.discountPolicy = discountPolicy;
+    public Promotion(DiscountPolicy discountPolicy, Reservation reservation, Orders orders) {
+        this.collectDiscounts = discountPolicy.collectDiscounts(reservation,orders);
     }
 
-    public Map<DiscountCondition, Money> calculateDiscountAmounts(Reservation reservation, Orders userOrders) {
-        return discountPolicy.calculateDiscountAmounts(reservation, userOrders);
+    public Map<DiscountCondition, Money> getCollectDiscounts() {
+        return collectDiscounts;
+    }
+
+    public Money calculateBenefitAmount() {
+        Money benefitMoney = Money.ZERO;
+
+        for (Money discountAmount : collectDiscounts.values()) {
+            benefitMoney = benefitMoney.add(discountAmount);
+        }
+        return benefitMoney;
+    }
+
+    public Money calculateDiscountAmount() {
+        Money discountMoney = calculateBenefitAmount();
+
+        for (DiscountCondition condition : collectDiscounts.keySet()) {
+            if (condition.getPromotionType() == GIVING_GIFT) {
+                discountMoney = discountMoney.subtract(collectDiscounts.get(condition));
+            }
+        }
+        return discountMoney;
     }
 }

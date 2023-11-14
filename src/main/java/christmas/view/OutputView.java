@@ -2,6 +2,7 @@ package christmas.view;
 
 import static christmas.util.ResultFormatter.dateFormat;
 import static christmas.util.ResultFormatter.discountFormat;
+import static christmas.util.ResultFormatter.discountMoneyFormat;
 import static christmas.util.ResultFormatter.menuFormat;
 import static christmas.util.ResultFormatter.moneyFormat;
 
@@ -11,6 +12,7 @@ import christmas.domain.discount.DiscountCondition;
 import christmas.domain.dto.MenuItem;
 import christmas.domain.gift.Gift;
 import christmas.domain.menu.Orders;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -76,6 +78,15 @@ public class OutputView {
         }
     }
 
+    public void printDiscountResult(Money totalMoney, Money BenefitPromoMoney, Money discountAmount) {
+        BigDecimal result = BenefitPromoMoney.getAmount();
+        System.out.println(Message.TOTAL_DISCOUNT_AMOUNT.message);
+        System.out.println(discountMoneyFormat(result));
+
+        System.out.println(Message.DISCOUNT_TOTAL_PRICE.message);
+        System.out.println(moneyFormat(totalMoney.subtract(discountAmount).getAmount()));
+    }
+
 
     private enum Message {
         WELCOME_MESSAGE("안녕하세요! 우테코 식당 12월 이벤트 플래너입니다."),
@@ -84,10 +95,9 @@ public class OutputView {
         ORIGINAL_TOTAL_PRICE(LINE_SEPARATOR + "<할인 전 총주문 금액>"),
         GIFT_MENU(LINE_SEPARATOR + "<증정 메뉴>"),
         DISCOUNT_DETAILS(LINE_SEPARATOR + "<혜택 내역>"),
-        GIVING_GIFTS("증정 이벤트"),
-        DISCOUNT_TOTAL_PRICE("<할인 후 예상 결제 금액>"),
+        DISCOUNT_TOTAL_PRICE(LINE_SEPARATOR + "<할인 후 예상 결제 금액>"),
         TOTAL_DISCOUNT_AMOUNT(LINE_SEPARATOR + "<총혜택 금액>"),
-        NEXT_MONTH_EVENT_BADGE("<12월 이벤트 배지>");
+        NEXT_MONTH_EVENT_BADGE(LINE_SEPARATOR + "<12월 이벤트 배지>");
 
         private final String message;
 
