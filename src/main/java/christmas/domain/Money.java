@@ -20,6 +20,18 @@ public class Money {
         return new Money(result);
     }
 
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public boolean exceedsEventPrice() {
+        return amount.compareTo(BigDecimal.valueOf(10_000)) >= 0;
+    }
+
+    public boolean exceedsGiftPrice() {
+        return amount.compareTo(BigDecimal.valueOf(120_000)) >= 0;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
