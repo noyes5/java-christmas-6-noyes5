@@ -6,11 +6,12 @@ import static christmas.util.ResultFormatter.moneyFormat;
 
 import christmas.domain.Money;
 import christmas.domain.Reservation;
+import christmas.domain.discount.DiscountCondition;
 import christmas.domain.dto.MenuItem;
-import christmas.domain.dto.OrderItem;
 import christmas.domain.gift.Gift;
 import christmas.domain.menu.Orders;
 import java.util.List;
+import java.util.Map;
 
 public class OutputView {
     private static final String LINE_SEPARATOR = System.lineSeparator();
@@ -30,8 +31,8 @@ public class OutputView {
         System.out.println(eventMessage);
         System.out.println(Message.ORDER_MENU.message);
 
-        List<OrderItem> orders = userOrders.getOrderItems();
-        for (OrderItem item : orders) {
+        List<MenuItem> orders = userOrders.getOrderItems();
+        for (MenuItem item : orders) {
             System.out.printf(menuFormat(item.menu().getName(), item.quantity()) + LINE_SEPARATOR);
         }
     }
@@ -45,12 +46,12 @@ public class OutputView {
     public void printGiftResult(Gift gift) {
         System.out.println(Message.GIFT_MENU.message);
         StringBuilder result = new StringBuilder();
-        List<MenuItem> gifts = gift.getGifts();
+        List<MenuIte2> gifts = gift.getGifts();
         appendGifts(result, gifts);
         System.out.println(result);
     }
 
-    private static void appendGifts(StringBuilder result, List<MenuItem> gifts) {
+    private void appendGifts(StringBuilder result, List<MenuIte2> gifts) {
         if (gifts.isEmpty()) {
             result.append(NO_BENEFIT);
         }
