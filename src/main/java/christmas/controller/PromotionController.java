@@ -6,6 +6,7 @@ import christmas.domain.Money;
 import christmas.domain.Promotion;
 import christmas.domain.Reservation;
 import christmas.domain.discount.DiscountCondition;
+import christmas.domain.dto.OrderInfo;
 import christmas.domain.gift.Gift;
 import christmas.domain.menu.Orders;
 import christmas.view.InputView;
@@ -23,43 +24,72 @@ public class PromotionController {
 
     public void play() {
         outputView.printMain();
-        Reservation reservation = Reservation.of(getReservation());
-        Orders userOrders = getOrderMenus();
-        outputView.printOrderMenu(userOrders, reservation);
-        Money totalMoney = userOrders.calculateTotalMoney();
-        outputView.printOriginalTotalMoney(totalMoney);
-        Gift gift = userOrders.giveGift(totalMoney);
-        printResult(gift);
-        DiscountPolicy discountPolicy = new DiscountPolicy(totalMoney);
-        Promotion promotion = new Promotion(discountPolicy, reservation, userOrders);
-        Map<DiscountCondition, Money> discountConditions = promotion.getCollectDiscounts();
-        outputView.printDiscount(discountConditions);
-        Money BenefitPromoMoney = promotion.calculateBenefitAmount();
-        Money discountAmount = promotion.calculateDiscountAmount();
-        outputView.printDiscountResult(totalMoney, BenefitPromoMoney, discountAmount);
-        outputView.printBadge(Badge.getBadgeByMoney(BenefitPromoMoney));
+        OrderInfo orderInfo = getOrderInfo();
+        printOrderInfo(orderInfo);
+        printPromotionResults(orderInfo);
     }
 
-    private void printResult(Gift gift) {
-        outputView.printGiftResult(gift);
+    private OrderInfo getOrderInfo() {
+        Reservation reservation = Reservation.of(getReservation());
+        Orders userOrders = getOrderMenus();
+        return new OrderInfo(reservation, userOrders);
+    }
 
+    private void printOrderInfo(OrderInfo orderInfo) {
+        outputView.printOrderMenu(orderInfo.orders(), orderInfo.reservation());
+    }
+
+    private void printPromotionResults(OrderInfo orderInfo) {
+        Orders userOrders = orderInfo.orders();
+        Reservation reservation = orderInfo.reservation();
+        Money totalMoney = userOrders.calculateTotalMoney();
+        Gift gift = userOrders.giveGift(totalMoney);
+        outputView.printOriginalTotalMoney(totalMoney);
+        outputView.printGiftResult(gift);
+        applyDiscountsAndDisplay(userOrders, reservation, totalMoney);
+    }
+
+    private void applyDiscountsAndDisplay(Orders userOrders, Reservation reservation, Money totalMoney) {
+        printDisplayDiscounts(reservation, userOrders, totalMoney);
+        calculatePromotionAndBadge(reservation, userOrders, totalMoney);
+    }
+
+    private void printDisplayDiscounts(Reservation reservation, Orders userOrders, Money totalMoney) {
+        Promotion promotion = createPromotion(reservation, userOrders, totalMoney);
+        Map<DiscountCondition, Money> discountConditions = promotion.getCollectDiscounts();
+        outputView.printDiscount(discountConditions);
+    }
+
+    private void calculatePromotionAndBadge(Reservation reservation, Orders userOrders, Money totalMoney) {
+        Promotion promotion = createPromotion(reservation, userOrders, totalMoney);
+        Money benefitPromoMoney = promotion.calculateBenefitAmount();
+        Money discountAmount = promotion.calculateDiscountAmount();
+        outputView.printDiscountResult(totalMoney, benefitPromoMoney, discountAmount);
+        outputView.printBadge(Badge.getBadgeByMoney(benefitPromoMoney));
+    }
+
+    private Promotion createPromotion(Reservation reservation, Orders userOrders, Money totalMoney) {
+        DiscountPolicy discountPolicy = new DiscountPolicy(totalMoney);
+        return new Promotion(discountPolicy, reservation, userOrders);
     }
 
     private int getReservation() {
-        try {
-            return inputView.readReservation();
-        } catch (IllegalArgumentException exception) {
-            outputView.printExceptionMessage(exception);
-            return getReservation();
+        while (true) {
+            try {
+                return inputView.readReservation();
+            } catch (IllegalArgumentException exception) {
+                outputView.printExceptionMessage(exception);
+            }
         }
     }
 
     private Orders getOrderMenus() {
-        try {
-            return Orders.createOrder(inputView.readOrders());
-        } catch (IllegalArgumentException exception) {
-            outputView.printExceptionMessage(exception);
-            return getOrderMenus();
+        while (true) {
+            try {
+                return Orders.createOrder(inputView.readOrders());
+            } catch (IllegalArgumentException exception) {
+                outputView.printExceptionMessage(exception);
+            }
         }
     }
 }

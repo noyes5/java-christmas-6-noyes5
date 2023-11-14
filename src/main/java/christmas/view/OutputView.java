@@ -1,5 +1,6 @@
 package christmas.view;
 
+import static christmas.domain.Constants.DECEMBER;
 import static christmas.util.ResultFormatter.dateFormat;
 import static christmas.util.ResultFormatter.discountFormat;
 import static christmas.util.ResultFormatter.discountMoneyFormat;
@@ -11,6 +12,7 @@ import christmas.domain.Money;
 import christmas.domain.Reservation;
 import christmas.domain.discount.DiscountCondition;
 import christmas.domain.dto.MenuItem;
+import christmas.domain.dto.OrderInfo;
 import christmas.domain.gift.Gift;
 import christmas.domain.menu.Orders;
 import java.math.BigDecimal;
@@ -26,7 +28,7 @@ public class OutputView {
     }
 
     public void printMain() {
-        System.out.println(Message.WELCOME_MESSAGE.message);
+        System.out.println(String.format(Message.WELCOME_MESSAGE.message, DECEMBER));
     }
 
     public void printOrderMenu(Orders userOrders, Reservation reservation) {
@@ -39,6 +41,28 @@ public class OutputView {
         for (MenuItem item : orders) {
             System.out.printf(menuFormat(item.menu().getName(), item.quantity()) + LINE_SEPARATOR);
         }
+    }
+
+    public void printOrderInfo(OrderInfo orderInfo) {
+        Reservation reservation = orderInfo.reservation();
+        Orders userOrders = orderInfo.orders();
+
+        displayEventPreviewHeader(reservation);
+        printOrderMenu(userOrders);
+    }
+
+    private static void printOrderMenu(Orders userOrders) {
+        System.out.println(Message.ORDER_MENU.message);
+        List<MenuItem> orders = userOrders.getOrderItems();
+        for (MenuItem item : orders) {
+            System.out.printf(menuFormat(item.menu().getName(), item.quantity()) + LINE_SEPARATOR);
+        }
+    }
+
+    private static void displayEventPreviewHeader(Reservation reservation) {
+        String formattedDate = dateFormat(reservation.getDate());
+        String eventMessage = String.format(Message.EVENT_PREVIEW_MESSAGE.message, formattedDate);
+        System.out.println(eventMessage);
     }
 
     public void printOriginalTotalMoney(Money totalMoney) {
@@ -89,13 +113,13 @@ public class OutputView {
     }
 
     public void printBadge(Badge badgeByMoney) {
-        System.out.println(Message.NEXT_MONTH_EVENT_BADGE.message);
+        System.out.println(String.format(Message.NEXT_MONTH_EVENT_BADGE.message, DECEMBER));
         System.out.println(badgeByMoney.toString());
     }
 
 
     private enum Message {
-        WELCOME_MESSAGE("안녕하세요! 우테코 식당 12월 이벤트 플래너입니다."),
+        WELCOME_MESSAGE("안녕하세요! 우테코 식당 %s월 이벤트 플래너입니다."),
         EVENT_PREVIEW_MESSAGE("%s에 우테코 식당에서 받을 이벤트 혜택 미리 보기!"),
         ORDER_MENU(LINE_SEPARATOR + "<주문 메뉴>"),
         ORIGINAL_TOTAL_PRICE(LINE_SEPARATOR + "<할인 전 총주문 금액>"),
@@ -103,7 +127,7 @@ public class OutputView {
         DISCOUNT_DETAILS(LINE_SEPARATOR + "<혜택 내역>"),
         DISCOUNT_TOTAL_PRICE(LINE_SEPARATOR + "<할인 후 예상 결제 금액>"),
         TOTAL_DISCOUNT_AMOUNT(LINE_SEPARATOR + "<총혜택 금액>"),
-        NEXT_MONTH_EVENT_BADGE(LINE_SEPARATOR + "<12월 이벤트 배지>");
+        NEXT_MONTH_EVENT_BADGE(LINE_SEPARATOR + "<%s월 이벤트 배지>");
 
         private final String message;
 
