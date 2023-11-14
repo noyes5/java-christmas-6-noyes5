@@ -9,7 +9,7 @@ public class MenuRepository {
     private static final List<Menu> menus = new ArrayList<>();
 
     static {
-        menus.add(new Menu("양송이스프", 6_000, Category.APPETIZER));
+        menus.add(new Menu("양송이수프", 6_000, Category.APPETIZER));
         menus.add(new Menu("타파스", 5_500, Category.APPETIZER));
         menus.add(new Menu("시저샐러드", 8_000, Category.APPETIZER));
         menus.add(new Menu("티본스테이크", 55_000, Category.MAIN));
