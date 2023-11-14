@@ -9,6 +9,7 @@ import christmas.domain.menu.Orders;
 
 public class WeekdayDiscount implements DiscountCondition {
     private static final int WEEKDAY_DISCOUNT_AMOUNT = WEEKDAY_DISCOUNT.getDiscount();
+
     @Override
     public boolean isSatisfiedBy(Reservation reservation) {
         return reservation.hasInWeekDayPeriods();
