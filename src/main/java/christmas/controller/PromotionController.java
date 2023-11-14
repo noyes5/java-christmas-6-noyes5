@@ -1,6 +1,8 @@
 package christmas.controller;
 
+import christmas.domain.Money;
 import christmas.domain.Reservation;
+import christmas.domain.gift.Gift;
 import christmas.domain.menu.Orders;
 import christmas.view.InputView;
 import christmas.view.OutputView;
@@ -19,8 +21,14 @@ public class PromotionController {
         Reservation reservation = Reservation.of(getReservation());
         Orders userOrders = getOrderMenus();
         outputView.printOrderMenu(userOrders, reservation);
-        // 총 금액 계산
-        // 총 혜택 계산
+        Money totalMoney = userOrders.calculateTotalMoney();
+        outputView.printOriginalTotalMoney(totalMoney);
+        Gift gift = userOrders.giveGift(totalMoney);
+        printResult(gift);
+    }
+
+    private void printResult(Gift gift) {
+        outputView.printGiftResult(gift);
     }
 
     private int getReservation() {
