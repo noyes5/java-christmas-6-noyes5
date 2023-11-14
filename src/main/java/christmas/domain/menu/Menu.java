@@ -13,12 +13,20 @@ public class Menu {
         this.category = category;
     }
 
-    public boolean hasName(String inputName) {
-        return name.equals(inputName);
+    public String getName() {
+        return name;
+    }
+
+    public int getPrice() {
+        return price;
     }
 
     public Category getCategory() {
         return category;
+    }
+
+    public boolean hasName(String inputName) {
+        return name.equals(inputName);
     }
 
     @Override
@@ -45,9 +53,5 @@ public class Menu {
                 ", name='" + name + '\'' +
                 ", category=" + category +
                 '}';
-    }
-
-    public String getName() {
-        return name;
     }
 }
