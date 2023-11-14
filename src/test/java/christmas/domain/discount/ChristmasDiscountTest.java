@@ -27,7 +27,7 @@ public class ChristmasDiscountTest {
     @DisplayName("크리스마스 첫날 할인 금액 확인 테스트")
     @Test
     void 첫날_할인_금액_확인() {
-        Reservation reservation = Reservation.of(1);
+        Reservation reservation = Reservation.from(1);
         Money discountMoney = christmasDiscount.calculateDiscountAmount(reservation, orders);
         assertThat(discountMoney).isEqualTo(Money.of(DEFAULT_DISCOUNT));
     }
@@ -35,7 +35,7 @@ public class ChristmasDiscountTest {
     @DisplayName("크리스마스 마지막날 할인 금액 확인 테스트")
     @Test
     void 마지막날_할인_금액_확인() {
-        Reservation reservation = Reservation.of(25);
+        Reservation reservation = Reservation.from(25);
         Money discountMoney = christmasDiscount.calculateDiscountAmount(reservation, orders);
         assertThat(discountMoney).isEqualTo(Money.of(DEFAULT_DISCOUNT).add(Money.of(CHRISTMAS_DISCOUNT_PER_DAY * 24)));
     }

@@ -30,7 +30,7 @@ public class PromotionController {
     }
 
     private OrderInfo getOrderInfo() {
-        Reservation reservation = Reservation.of(getReservation());
+        Reservation reservation = Reservation.from(getReservation());
         Orders userOrders = getOrderMenus();
         return new OrderInfo(reservation, userOrders);
     }

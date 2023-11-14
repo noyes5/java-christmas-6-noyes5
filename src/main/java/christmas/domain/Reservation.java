@@ -15,7 +15,7 @@ public class Reservation {
         this.reservationDate = reservationDate;
     }
 
-    public static Reservation of(int inputDate) {
+    public static Reservation from(int inputDate) {
         LocalDate date = LocalDate.of(THIS_YEAR, DECEMBER, inputDate);
         return new Reservation(date);
     }

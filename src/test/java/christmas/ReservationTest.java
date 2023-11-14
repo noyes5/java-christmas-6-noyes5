@@ -12,7 +12,7 @@ public class ReservationTest {
     @ParameterizedTest
     @ValueSource(ints = {1, 25})
     void 크리스마스_기간_확인(int christmasPeriod) {
-        Reservation reservation = Reservation.of(christmasPeriod);
+        Reservation reservation = Reservation.from(christmasPeriod);
         assertThat(reservation.hasInChristmasPeriods()).isTrue();
     }
 
@@ -20,7 +20,7 @@ public class ReservationTest {
     @ParameterizedTest
     @ValueSource(ints = {26, 31})
     void 비크리스마스_기간_확인(int nonChristmasPeriod) {
-        Reservation reservation = Reservation.of(nonChristmasPeriod);
+        Reservation reservation = Reservation.from(nonChristmasPeriod);
         assertThat(reservation.hasInChristmasPeriods()).isFalse();
     }
 
@@ -28,7 +28,7 @@ public class ReservationTest {
     @ParameterizedTest
     @ValueSource(ints = {4, 5, 6, 7, 31})
     void 평일_확인(int weekday) {
-        Reservation reservation = Reservation.of(weekday);
+        Reservation reservation = Reservation.from(weekday);
         assertThat(reservation.hasInWeekDayPeriods()).isTrue();
     }
 
@@ -36,7 +36,7 @@ public class ReservationTest {
     @ParameterizedTest
     @ValueSource(ints = {1, 2})
     void 비평일_확인(int weekday) {
-        Reservation reservation = Reservation.of(weekday);
+        Reservation reservation = Reservation.from(weekday);
         assertThat(reservation.hasInWeekDayPeriods()).isFalse();
     }
 
@@ -44,7 +44,7 @@ public class ReservationTest {
     @ParameterizedTest
     @ValueSource(ints = {1, 2})
     void 주말_확인(int weekend) {
-        Reservation reservation = Reservation.of(weekend);
+        Reservation reservation = Reservation.from(weekend);
         assertThat(reservation.hasInWeekEndPeriods()).isTrue();
     }
 
@@ -52,7 +52,7 @@ public class ReservationTest {
     @ParameterizedTest
     @ValueSource(ints = {4, 5, 6, 7, 31})
     void 비주말_확인(int weekend) {
-        Reservation reservation = Reservation.of(weekend);
+        Reservation reservation = Reservation.from(weekend);
         assertThat(reservation.hasInWeekEndPeriods()).isFalse();
     }
 
@@ -60,7 +60,7 @@ public class ReservationTest {
     @ParameterizedTest
     @ValueSource(ints = {3, 10, 17, 24, 25})
     void 특별_기간_확인(int special) {
-        Reservation reservation = Reservation.of(special);
+        Reservation reservation = Reservation.from(special);
         assertThat(reservation.hasInSpecialPeriods()).isTrue();
     }
 
@@ -68,7 +68,7 @@ public class ReservationTest {
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 26, 27, 28})
     void 비특별_기간_확인(int special) {
-        Reservation reservation = Reservation.of(special);
+        Reservation reservation = Reservation.from(special);
         assertThat(reservation.hasInSpecialPeriods()).isFalse();
     }
 }

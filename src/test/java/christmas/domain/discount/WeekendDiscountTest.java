@@ -26,7 +26,7 @@ class WeekendDiscountTest {
     @DisplayName("주말기간 할인 테스트")
     @Test
     void 주말_할인() {
-        Reservation weekendReservation =Reservation.of(4);
+        Reservation weekendReservation =Reservation.from(4);
         christmas.domain.Money discountMoney = weekendDiscount.calculateDiscountAmount(weekendReservation, orders);
         assertThat(discountMoney).isEqualTo(Money.of(WEEKEND_DISCOUNT_AMOUNT));
     }

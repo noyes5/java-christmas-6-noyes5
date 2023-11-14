@@ -26,7 +26,7 @@ class SpecialDayDiscountTest {
     @DisplayName("특별기간 할인 테스트")
     @Test
     void 특별일자_할인() {
-        Reservation specialdayReservation = Reservation.of(3);
+        Reservation specialdayReservation = Reservation.from(3);
         Money discountMoney = specialDayDiscount.calculateDiscountAmount(specialdayReservation, orders);
         assertThat(discountMoney).isEqualTo(Money.of(SPECIAL_DISCOUNT_AMOUNT));
     }

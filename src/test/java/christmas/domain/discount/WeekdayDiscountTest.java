@@ -27,7 +27,7 @@ class WeekdayDiscountTest {
     @DisplayName("평일기간 할인 테스트")
     @Test
     void 평일_할인() {
-        Reservation weekdayReservation = Reservation.of(3);
+        Reservation weekdayReservation = Reservation.from(3);
         Money discountMoney = weekdayDiscount.calculateDiscountAmount(weekdayReservation, orders);
         assertThat(discountMoney).isEqualTo(Money.of(WEEKDAY_DISCOUNT_AMOUNT));
     }
