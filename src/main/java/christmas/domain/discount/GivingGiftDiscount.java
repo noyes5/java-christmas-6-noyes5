@@ -3,17 +3,18 @@ package christmas.domain.discount;
 import static christmas.domain.promotion.PromotionType.GIVING_GIFT;
 
 import christmas.domain.Money;
-import christmas.domain.promotion.PromotionType;
 import christmas.domain.Reservation;
-import christmas.dto.MenuItem;
 import christmas.domain.gift.Gift;
 import christmas.domain.menu.Orders;
+import christmas.domain.promotion.PromotionType;
+import christmas.dto.MenuItem;
+import christmas.dto.OrderInfo;
 import java.util.List;
 
 public class GivingGiftDiscount implements DiscountCondition {
     @Override
-    public boolean isSatisfiedBy(Reservation reservation) {
-        return reservation.hasInPeriods();
+    public boolean isSatisfiedBy(OrderInfo orderInfo) {
+        return orderInfo.orders().calculateTotalMoney().exceedsGiftPrice();
     }
 
     @Override

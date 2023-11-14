@@ -1,8 +1,7 @@
 package christmas.domain.discount;
 
 import christmas.domain.Money;
-import christmas.domain.Reservation;
-import christmas.domain.menu.Orders;
+import christmas.dto.OrderInfo;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -26,12 +25,13 @@ public class DiscountPolicy {
         }
     }
 
-    public Map<DiscountCondition, Money> collectDiscounts(Reservation reservation, Orders orders) {
+    public Map<DiscountCondition, Money> collectDiscounts(OrderInfo orderInfo) {
+
         Map<DiscountCondition, Money> collectDiscounts = new LinkedHashMap<>();
 
         for (DiscountCondition condition : conditions) {
-            if (condition.isSatisfiedBy(reservation)) {
-                Money discountMoney = condition.calculateDiscountAmount(reservation, orders);
+            if (condition.isSatisfiedBy(orderInfo)) {
+                Money discountMoney = condition.calculateDiscountAmount(orderInfo.reservation(), orderInfo.orders());
                 collectDiscounts.put(condition, discountMoney);
             }
         }

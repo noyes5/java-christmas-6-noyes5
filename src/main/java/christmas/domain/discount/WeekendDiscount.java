@@ -6,13 +6,14 @@ import christmas.domain.Money;
 import christmas.domain.promotion.PromotionType;
 import christmas.domain.Reservation;
 import christmas.domain.menu.Orders;
+import christmas.dto.OrderInfo;
 
 public class WeekendDiscount implements DiscountCondition {
     public static final int WEEKEND_DISCOUNT_AMOUNT = WEEKEND_DISCOUNT.getDiscount();
 
     @Override
-    public boolean isSatisfiedBy(Reservation reservation) {
-        return reservation.hasInWeekEndPeriods();
+    public boolean isSatisfiedBy(OrderInfo orderInfo) {
+        return orderInfo.reservation().hasInWeekEndPeriods();
     }
 
     public Money calculateDiscountAmount(Reservation reservation, Orders orders) {

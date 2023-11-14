@@ -46,31 +46,30 @@ public class PromotionController {
         Gift gift = userOrders.giveGift(totalMoney);
         outputView.printOriginalTotalMoney(totalMoney);
         outputView.printGiftResult(gift);
-        applyDiscountsAndDisplay(userOrders, reservation, totalMoney);
+        applyDiscountsAndDisplay(orderInfo, totalMoney);
     }
 
-    private void applyDiscountsAndDisplay(Orders userOrders, Reservation reservation, Money totalMoney) {
-        printDisplayDiscounts(reservation, userOrders, totalMoney);
-        calculatePromotionAndBadge(reservation, userOrders, totalMoney);
+    private void applyDiscountsAndDisplay(OrderInfo orderInfo, Money totalMoney) {
+        Promotion promotion = createPromotion(orderInfo, totalMoney);
+        printDisplayDiscounts(promotion, totalMoney);
+        calculatePromotionAndBadge(promotion, totalMoney);
     }
 
-    private void printDisplayDiscounts(Reservation reservation, Orders userOrders, Money totalMoney) {
-        Promotion promotion = createPromotion(reservation, userOrders, totalMoney);
+    private void printDisplayDiscounts(Promotion promotion, Money totalMoney) {
         Map<DiscountCondition, Money> discountConditions = promotion.getCollectDiscounts();
         outputView.printDiscount(discountConditions);
     }
 
-    private void calculatePromotionAndBadge(Reservation reservation, Orders userOrders, Money totalMoney) {
-        Promotion promotion = createPromotion(reservation, userOrders, totalMoney);
+    private void calculatePromotionAndBadge(Promotion promotion, Money totalMoney) {
         Money benefitPromoMoney = promotion.calculateBenefitAmount();
         Money discountAmount = promotion.calculateDiscountAmount();
         outputView.printDiscountResult(totalMoney, benefitPromoMoney, discountAmount);
         outputView.printBadge(Badge.getBadgeByMoney(benefitPromoMoney));
     }
 
-    private Promotion createPromotion(Reservation reservation, Orders userOrders, Money totalMoney) {
+    private Promotion createPromotion(OrderInfo orderInfo, Money totalMoney) {
         DiscountPolicy discountPolicy = new DiscountPolicy(totalMoney);
-        return new Promotion(discountPolicy, reservation, userOrders);
+        return new Promotion(discountPolicy, orderInfo);
     }
 
     private int getReservation() {

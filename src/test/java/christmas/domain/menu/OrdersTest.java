@@ -57,7 +57,7 @@ class OrdersTest {
         menuAndQuantities.put("양송이수프", 2);
         menuAndQuantities.put("타파스", 1);
         Orders orders = Orders.createOrder(menuAndQuantities);
-        
+
         assertThat(orders.calculateTotalMoney()).isEqualTo(Money.of(17500));
     }
 }

@@ -7,13 +7,14 @@ import christmas.domain.Money;
 import christmas.domain.Reservation;
 import christmas.domain.discount.DiscountCondition;
 import christmas.domain.menu.Orders;
+import christmas.dto.OrderInfo;
 import java.util.Map;
 
 public class Promotion {
     private Map<DiscountCondition, Money> collectDiscounts;
 
-    public Promotion(DiscountPolicy discountPolicy, Reservation reservation, Orders orders) {
-        this.collectDiscounts = discountPolicy.collectDiscounts(reservation, orders);
+    public Promotion(DiscountPolicy discountPolicy, OrderInfo orderInfo) {
+        this.collectDiscounts = discountPolicy.collectDiscounts(orderInfo);
     }
 
     public Map<DiscountCondition, Money> getCollectDiscounts() {
