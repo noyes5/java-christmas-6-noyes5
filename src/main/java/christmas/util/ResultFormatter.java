@@ -31,7 +31,7 @@ public class ResultFormatter {
         return String.format(DISCOUNT_RESULT_FORMAT, menuName, moneyFormat(bigDecimal));
     }
 
-    public static String discountMoneyFormat(BigDecimal bigDecimal) {
+    public static String benefitMoneyFormat(BigDecimal bigDecimal) {
         if (bigDecimal.compareTo(BigDecimal.ZERO) == 0) {
             return new DecimalFormat(MONEY_FORMAT).format(bigDecimal);
         }

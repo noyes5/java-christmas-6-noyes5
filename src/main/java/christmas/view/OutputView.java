@@ -1,6 +1,7 @@
 package christmas.view;
 
 import static christmas.domain.Constants.DECEMBER;
+import static christmas.util.ResultFormatter.benefitMoneyFormat;
 import static christmas.util.ResultFormatter.dateFormat;
 import static christmas.util.ResultFormatter.discountFormat;
 import static christmas.util.ResultFormatter.menuFormat;
@@ -104,10 +105,14 @@ public class OutputView {
 
     public void printDiscountResult(Money totalMoney, Money benefitPromoMoney, Money discountAmount) {
         System.out.println(Message.TOTAL_DISCOUNT_AMOUNT.message);
-        printMoneyFormat(benefitPromoMoney.getAmount());
+        printBenefitMoneyFormat(benefitPromoMoney.getAmount());
 
         printMessage(Message.DISCOUNT_TOTAL_PRICE.message);
         printMoneyFormat(totalMoney.subtract(discountAmount).getAmount());
+    }
+
+    private void printBenefitMoneyFormat(BigDecimal amount) {
+        System.out.println(benefitMoneyFormat(amount));
     }
 
     private void printMoneyFormat(BigDecimal amount) {

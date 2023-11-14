@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public class DiscountPolicy {
-    private static List<DiscountCondition> conditions;
+    private final List<DiscountCondition> conditions;
 
     public DiscountPolicy(Money totalMoney) {
         conditions = new ArrayList<>();
