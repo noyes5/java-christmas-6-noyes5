@@ -9,6 +9,7 @@ import christmas.domain.menu.Orders;
 
 public class ChristmasDiscount implements DiscountCondition {
     public static final int DEFAULT_DISCOUNT = 1_000;
+    public static final int CHRISTMAS_DISCOUNT_PER_DAY = CHRISTMAS_DISCOUNT.getDiscount();
 
     @Override
     public boolean isSatisfiedBy(Reservation reservation) {
@@ -18,7 +19,7 @@ public class ChristmasDiscount implements DiscountCondition {
     @Override
     public Money calculateDiscountAmount(Reservation reservation, Orders orders) {
         int dayOfMonth = reservation.getDate().getDayOfMonth();
-        int discountSum = DEFAULT_DISCOUNT + ((dayOfMonth - 1) * CHRISTMAS_DISCOUNT.getDiscount());
+        int discountSum = DEFAULT_DISCOUNT + ((dayOfMonth - 1) * CHRISTMAS_DISCOUNT_PER_DAY);
         return Money.of(discountSum);
     }
 

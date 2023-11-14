@@ -8,6 +8,8 @@ import christmas.domain.Reservation;
 import christmas.domain.menu.Orders;
 
 public class SpecialDayDiscount implements DiscountCondition {
+    private static final int SPECIAL_DISCOUNT_AMOUNT = SPECIAL_DISCOUNT.getDiscount();
+
     @Override
     public boolean isSatisfiedBy(Reservation reservation) {
         return reservation.hasInSpecialPeriods();
@@ -15,7 +17,7 @@ public class SpecialDayDiscount implements DiscountCondition {
 
     @Override
     public Money calculateDiscountAmount(Reservation reservation, Orders orders) {
-        return Money.of(SPECIAL_DISCOUNT.getDiscount());
+        return Money.of(SPECIAL_DISCOUNT_AMOUNT);
     }
 
     @Override
