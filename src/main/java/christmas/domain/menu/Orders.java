@@ -4,7 +4,6 @@ import christmas.domain.Money;
 import christmas.domain.dto.MenuItem;
 import christmas.domain.exception.OrderException;
 import christmas.domain.gift.Gift;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -59,9 +58,9 @@ public class Orders {
     }
 
     public Money calculateTotalMoney() {
-        Money totalMoney = new Money(BigDecimal.ZERO);
+        Money totalMoney = Money.ZERO;
         for (MenuItem item : orderItems) {
-            Money itemPrice = new Money(new BigDecimal(item.menu().getPrice() * item.quantity()));
+            Money itemPrice = Money.of(item.menu().getPrice() * item.quantity());
             totalMoney = totalMoney.add(itemPrice);
         }
         return totalMoney;

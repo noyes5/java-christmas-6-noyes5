@@ -1,6 +1,8 @@
 package christmas.controller;
 
+import christmas.domain.DiscountPolicy;
 import christmas.domain.Money;
+import christmas.domain.Promotion;
 import christmas.domain.Reservation;
 import christmas.domain.gift.Gift;
 import christmas.domain.menu.Orders;
@@ -25,10 +27,14 @@ public class PromotionController {
         outputView.printOriginalTotalMoney(totalMoney);
         Gift gift = userOrders.giveGift(totalMoney);
         printResult(gift);
+        DiscountPolicy discountPolicy = new DiscountPolicy(totalMoney);
+        Promotion promotion = new Promotion(discountPolicy);
+        outputView.printDiscount(promotion.calculateDiscountAmounts(reservation, userOrders));
     }
 
     private void printResult(Gift gift) {
         outputView.printGiftResult(gift);
+
     }
 
     private int getReservation() {

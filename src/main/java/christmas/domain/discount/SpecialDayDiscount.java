@@ -1,7 +1,11 @@
 package christmas.domain.discount;
 
-import christmas.domain.DiscountAmount;
+import static christmas.domain.PromotionType.SPECIAL_DISCOUNT;
+
+import christmas.domain.Money;
+import christmas.domain.PromotionType;
 import christmas.domain.Reservation;
+import christmas.domain.menu.Orders;
 
 public class SpecialDayDiscount implements DiscountCondition {
     @Override
@@ -9,7 +13,13 @@ public class SpecialDayDiscount implements DiscountCondition {
         return reservation.hasInSpecialPeriods();
     }
 
-    public DiscountAmount calculateDiscountAmount(Reservation reservation) {
-        return DiscountAmount.of("1000");
+    @Override
+    public Money calculateDiscountAmount(Reservation reservation, Orders orders) {
+        return Money.of(SPECIAL_DISCOUNT.getDiscount());
+    }
+
+    @Override
+    public PromotionType getPromotionType() {
+        return SPECIAL_DISCOUNT;
     }
 }

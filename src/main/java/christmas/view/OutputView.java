@@ -1,6 +1,7 @@
 package christmas.view;
 
 import static christmas.util.ResultFormatter.dateFormat;
+import static christmas.util.ResultFormatter.discountFormat;
 import static christmas.util.ResultFormatter.menuFormat;
 import static christmas.util.ResultFormatter.moneyFormat;
 
@@ -46,12 +47,12 @@ public class OutputView {
     public void printGiftResult(Gift gift) {
         System.out.println(Message.GIFT_MENU.message);
         StringBuilder result = new StringBuilder();
-        List<MenuIte2> gifts = gift.getGifts();
+        List<MenuItem> gifts = gift.getGifts();
         appendGifts(result, gifts);
         System.out.println(result);
     }
 
-    private void appendGifts(StringBuilder result, List<MenuIte2> gifts) {
+    private void appendGifts(StringBuilder result, List<MenuItem> gifts) {
         if (gifts.isEmpty()) {
             result.append(NO_BENEFIT);
         }
@@ -62,6 +63,19 @@ public class OutputView {
             result.append(menuFormat(giftMenuName, quantity));
         });
     }
+
+    public void printDiscount(Map<DiscountCondition, Money> discountConditions) {
+        System.out.println(Message.DISCOUNT_DETAILS.message);
+        if (discountConditions.isEmpty()) {
+            System.out.println(NO_BENEFIT);
+        }
+        for (DiscountCondition condition : discountConditions.keySet()) {
+            discountConditions.get(condition);
+            System.out.println(discountFormat(condition.getPromotionType().getMessage(),
+                    discountConditions.get(condition).getAmount()));
+        }
+    }
+
 
     private enum Message {
         WELCOME_MESSAGE("안녕하세요! 우테코 식당 12월 이벤트 플래너입니다."),

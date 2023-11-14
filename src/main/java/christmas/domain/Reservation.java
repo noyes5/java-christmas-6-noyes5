@@ -1,8 +1,12 @@
 package christmas.domain;
 
+import static christmas.domain.Constants.CHRISTMAS_DATE;
+import static christmas.domain.Constants.DECEMBER;
+import static christmas.domain.Constants.DECEMBER_START_DATE;
+import static christmas.domain.Constants.THIS_YEAR;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.Month;
 
 public class Reservation {
     private LocalDate reservationDate;
@@ -12,7 +16,7 @@ public class Reservation {
     }
 
     public static Reservation of(int inputDate) {
-        LocalDate date = LocalDate.of(2023, Month.DECEMBER, inputDate);
+        LocalDate date = LocalDate.of(THIS_YEAR, DECEMBER, inputDate);
         return new Reservation(date);
     }
 
@@ -23,24 +27,29 @@ public class Reservation {
     public boolean hasInChristmasPeriods() {
         int month = reservationDate.getMonthValue();
         int day = reservationDate.getDayOfMonth();
-        return month == 12 && day >= 1 && day <= 25;
+        return month == DECEMBER && day >= DECEMBER_START_DATE && day <= CHRISTMAS_DATE;
     }
 
     public boolean hasInWeekDayPeriods() {
         int month = reservationDate.getMonthValue();
         DayOfWeek dayOfWeek = reservationDate.getDayOfWeek();
-        return month == 12 && (dayOfWeek != DayOfWeek.FRIDAY && dayOfWeek != DayOfWeek.SATURDAY);
+        return month == DECEMBER && (dayOfWeek != DayOfWeek.FRIDAY && dayOfWeek != DayOfWeek.SATURDAY);
     }
 
     public boolean hasInWeekEndPeriods() {
         int month = reservationDate.getMonthValue();
         DayOfWeek dayOfWeek = reservationDate.getDayOfWeek();
-        return month == 12 && (dayOfWeek != DayOfWeek.FRIDAY || dayOfWeek != DayOfWeek.SATURDAY);
+        return month == DECEMBER && (dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY);
     }
 
     public boolean hasInSpecialPeriods() {
         int month = reservationDate.getMonthValue();
         DayOfWeek dayOfWeek = reservationDate.getDayOfWeek();
-        return month == 12 && (dayOfWeek == DayOfWeek.SUNDAY || reservationDate.getDayOfMonth() == 25);
+        return month == DECEMBER && (dayOfWeek == DayOfWeek.SUNDAY
+                || reservationDate.getDayOfMonth() == CHRISTMAS_DATE);
+    }
+
+    public boolean hasInPeriods() {
+        return reservationDate.getMonthValue() == DECEMBER;
     }
 }

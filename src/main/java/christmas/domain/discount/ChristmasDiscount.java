@@ -1,18 +1,29 @@
 package christmas.domain.discount;
 
-import christmas.domain.DiscountAmount;
+import static christmas.domain.PromotionType.CHRISTMAS_DISCOUNT;
+
+import christmas.domain.Money;
+import christmas.domain.PromotionType;
 import christmas.domain.Reservation;
+import christmas.domain.menu.Orders;
 
 public class ChristmasDiscount implements DiscountCondition {
+    public static final int DEFAULT_DISCOUNT = 1_000;
+
     @Override
     public boolean isSatisfiedBy(Reservation reservation) {
         return reservation.hasInChristmasPeriods();
     }
 
-    public DiscountAmount calculateDiscountAmount(Reservation reservation) {
+    @Override
+    public Money calculateDiscountAmount(Reservation reservation, Orders orders) {
         int dayOfMonth = reservation.getDate().getDayOfMonth();
-        int discountSum = 1000 + ((dayOfMonth - 1)* 100);
-        String discountAmount = String.valueOf(discountSum);
-        return DiscountAmount.of(discountAmount);
+        int discountSum = DEFAULT_DISCOUNT + ((dayOfMonth - 1) * CHRISTMAS_DISCOUNT.getDiscount());
+        return Money.of(discountSum);
+    }
+
+    @Override
+    public PromotionType getPromotionType() {
+        return CHRISTMAS_DISCOUNT;
     }
 }

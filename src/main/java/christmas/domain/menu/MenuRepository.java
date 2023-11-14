@@ -12,7 +12,7 @@ public class MenuRepository {
         menus.add(new Menu("양송이스프", 6_000, Category.APPETIZER));
         menus.add(new Menu("타파스", 5_500, Category.APPETIZER));
         menus.add(new Menu("시저샐러드", 8_000, Category.APPETIZER));
-        menus.add(new Menu("티본스테이크", 6_000, Category.MAIN));
+        menus.add(new Menu("티본스테이크", 55_000, Category.MAIN));
         menus.add(new Menu("바비큐립", 54_000, Category.MAIN));
         menus.add(new Menu("해산물파스타", 35_000, Category.MAIN));
         menus.add(new Menu("크리스마스파스타", 25_000, Category.MAIN));

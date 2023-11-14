@@ -4,10 +4,15 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Money {
-    private BigDecimal amount;
+    public static final Money ZERO = new Money(BigDecimal.ZERO);
+    private final BigDecimal amount;
 
-    public Money(BigDecimal amount) {
+    private Money(BigDecimal amount) {
         this.amount = amount;
+    }
+
+    public static Money of(int inputMoney) {
+        return new Money(BigDecimal.valueOf(inputMoney));
     }
 
     public Money add(Money other) {
@@ -17,6 +22,11 @@ public class Money {
 
     public Money subtract(Money other) {
         BigDecimal result = this.amount.subtract(other.amount);
+        return new Money(result);
+    }
+
+    public Money multiply(Money other) {
+        BigDecimal result = this.amount.multiply(other.amount);
         return new Money(result);
     }
 

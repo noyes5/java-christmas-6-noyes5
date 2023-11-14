@@ -1,7 +1,11 @@
 package christmas.domain.discount;
 
-import christmas.domain.DiscountAmount;
+import static christmas.domain.PromotionType.WEEKDAY_DISCOUNT;
+
+import christmas.domain.Money;
+import christmas.domain.PromotionType;
 import christmas.domain.Reservation;
+import christmas.domain.menu.Orders;
 
 public class WeekdayDiscount implements DiscountCondition {
     @Override
@@ -9,7 +13,14 @@ public class WeekdayDiscount implements DiscountCondition {
         return reservation.hasInWeekDayPeriods();
     }
 
-    public DiscountAmount calculateDiscountAmount(Reservation reservation) {
-        return DiscountAmount.of("2023");
+    @Override
+    public Money calculateDiscountAmount(Reservation reservation, Orders orders) {
+        int desertAmount = orders.getDessertItemCount();
+        return Money.of(WEEKDAY_DISCOUNT.getDiscount()).multiply(Money.of(desertAmount));
+    }
+
+    @Override
+    public PromotionType getPromotionType() {
+        return WEEKDAY_DISCOUNT;
     }
 }
