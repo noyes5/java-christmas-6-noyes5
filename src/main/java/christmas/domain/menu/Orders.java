@@ -1,7 +1,7 @@
 package christmas.domain.menu;
 
 import christmas.domain.Money;
-import christmas.domain.dto.MenuItem;
+import christmas.dto.MenuItem;
 import christmas.domain.exception.OrderException;
 import christmas.domain.gift.Gift;
 import java.util.ArrayList;

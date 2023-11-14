@@ -1,9 +1,9 @@
 package christmas.domain.discount;
 
-import static christmas.domain.PromotionType.WEEKDAY_DISCOUNT;
+import static christmas.domain.promotion.PromotionType.WEEKDAY_DISCOUNT;
 
 import christmas.domain.Money;
-import christmas.domain.PromotionType;
+import christmas.domain.promotion.PromotionType;
 import christmas.domain.Reservation;
 import christmas.domain.menu.Orders;
 

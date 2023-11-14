@@ -1,5 +1,7 @@
-package christmas.domain;
+package christmas.domain.discount;
 
+import christmas.domain.Money;
+import christmas.domain.Reservation;
 import christmas.domain.discount.ChristmasDiscount;
 import christmas.domain.discount.DiscountCondition;
 import christmas.domain.discount.GivingGiftDiscount;

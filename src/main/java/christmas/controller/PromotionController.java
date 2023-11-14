@@ -1,12 +1,12 @@
 package christmas.controller;
 
 import christmas.domain.Badge;
-import christmas.domain.DiscountPolicy;
+import christmas.domain.discount.DiscountPolicy;
 import christmas.domain.Money;
-import christmas.domain.Promotion;
+import christmas.domain.promotion.Promotion;
 import christmas.domain.Reservation;
 import christmas.domain.discount.DiscountCondition;
-import christmas.domain.dto.OrderInfo;
+import christmas.dto.OrderInfo;
 import christmas.domain.gift.Gift;
 import christmas.domain.menu.Orders;
 import christmas.view.InputView;

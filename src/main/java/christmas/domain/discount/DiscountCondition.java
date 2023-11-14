@@ -1,6 +1,6 @@
 package christmas.domain.discount;
 
-import christmas.domain.PromotionType;
+import christmas.domain.promotion.PromotionType;
 import christmas.domain.Money;
 import christmas.domain.Reservation;
 import christmas.domain.menu.Orders;
