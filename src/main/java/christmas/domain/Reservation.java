@@ -48,8 +48,4 @@ public class Reservation {
         return month == DECEMBER && (dayOfWeek == DayOfWeek.SUNDAY
                 || reservationDate.getDayOfMonth() == CHRISTMAS_DATE);
     }
-
-    public boolean hasInPeriods() {
-        return reservationDate.getMonthValue() == DECEMBER;
-    }
 }
